@@ -1,0 +1,6 @@
+#!/bin/bash
+
+path=$(dirname $(dirname "${BASH_SOURCE[0]}"))
+
+echo -e "Changing owner to root for $@"
+$path/bin/exec chown -R root /var/www/html

@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+const SEED_ROOT = __DIR__;
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Seed\Commands\Profiles;
+use Seed\Commands\Seed;
+use Symfony\Component\Finder\Finder;
+
+$finder = new Finder();
+$finder->in('./');
+
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+$application->addCommands(
+    [
+        new Profiles(),
+        new Seed(),
+    ]
+);
+
+$application->run();

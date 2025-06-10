@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+path=$(dirname $(dirname "${BASH_SOURCE[0]}"))
+
+docker-compose -f $path/docker-compose.yml build "$@"
+docker-compose -f $path/docker-compose.yml up -d --remove-orphans

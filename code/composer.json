@@ -1,0 +1,26 @@
+{
+  "name": "alaa/seed",
+  "description": "Import mysql database",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "database",
+    "database sync",
+    "seed"
+  ],
+  "authors": [
+    {
+      "name": "Alaa Al-Maliki",
+      "email": "alaa.almaliki@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/console": "^7.3",
+    "symfony/finder": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Seed\\": "app/"
+    }
+  }
+}

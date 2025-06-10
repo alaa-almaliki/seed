@@ -1,0 +1,5 @@
+.idea
+code/profiles/*
+code/db/*
+code/vendor
+!*/*/.gitkeep
