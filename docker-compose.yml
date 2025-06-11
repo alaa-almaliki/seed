@@ -7,14 +7,10 @@ services:
     env_file:
       - ./.env
     working_dir: /var/www/html
-#    networks:
-#      - seedNetwork
     volumes:
       - ./code:/var/www/html
       - /var/www/html/vendor
       - ~/.composer:/var/www/.composer:cached
-      - ~/.ssh/id_rsa:/var/www/.ssh/id_rsa:cached
-      - ~/.ssh/known_hosts:/var/www/.ssh/known_hosts:cached
       - seed_mysql:/var/lib/mysql
     ports:
       - "${MYSQL_PORT}:3306"

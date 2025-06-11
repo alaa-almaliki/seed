@@ -1,6 +1,7 @@
 {
   "name": "alaa/seed",
   "description": "Import mysql database",
+  "version": "1.0.0",
   "type": "library",
   "license": "MIT",
   "keywords": [
