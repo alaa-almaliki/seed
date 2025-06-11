@@ -1,10 +1,5 @@
 FROM php:8.4-cli
 
-#ARG APP_ID=1000
-
-#RUN groupadd -g "$APP_ID" app \
-#  && useradd -g "$APP_ID" -u "$APP_ID" -d /var/www -s /bin/bash app
-
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 ENV TZ=UTC

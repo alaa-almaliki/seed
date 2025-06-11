@@ -10,7 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListProfiles implements Action
+class Scan implements Action
 {
     public function execute(InputInterface $input, OutputInterface $output): int
     {

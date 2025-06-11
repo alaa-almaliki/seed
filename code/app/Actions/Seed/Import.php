@@ -19,16 +19,18 @@ class Import implements Action
         $command = 'mysql -uroot';
 
         $output->writeln('Creating database ' . $mysql['database']);
-        $this->recreateDatabase($command, $mysql);
+        $this->createDatabase($command, $mysql);
+
         $output->writeln('Creating user ' . $mysql['user']);
-        $this->recreateUser($command, $mysql);
+        $this->createUser($command, $mysql);
 
         $output->writeln(sprintf('importing database %s from %s', $mysql['database'], $sqlFile));
         $this->importDatabase($command, $mysql, $sqlFile);
+
         return Command::SUCCESS;
     }
 
-    private function recreateUser(string $command, array $mysql): void
+    private function createUser(string $command, array $mysql): void
     {
         $deleteUserStatement = sprintf(
             '%s -e "DROP USER IF EXISTS \'%s\'@\'%s\';"',
@@ -60,7 +62,7 @@ class Import implements Action
 
     }
 
-    private function recreateDatabase(string $command, array $mysql): void
+    private function createDatabase(string $command, array $mysql): void
     {
         $dropDatabaseStatement = sprintf('%s -e "DROP DATABASE IF EXISTS %s;"', $command, $mysql['database']);
         $createDatabaseStatement = sprintf(
@@ -80,6 +82,6 @@ class Import implements Action
     {
         exec(sprintf('%s -e "use %s";', $command, $mysql['database']));
         exec(sprintf('%s -e "SET SESSION SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\';"', $command));
-        exec(sprintf('%s -f %s < %s;', $command, $mysql['database'], $sqlFile));
+        exec(sprintf('%s -f --skip-definer %s < %s;', $command, $mysql['database'], $sqlFile));
     }
 }

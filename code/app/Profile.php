@@ -9,7 +9,7 @@ use Seed\Actions\Action;
 use Seed\Actions\Profiles\Copy;
 use Seed\Actions\Profiles\Create;
 use Seed\Actions\Profiles\Delete;
-use Seed\Actions\Profiles\ListProfiles;
+use Seed\Actions\Profiles\Scan;
 
 class Profile
 {
@@ -19,7 +19,7 @@ class Profile
     public static function getAction(string $action): Action
     {
         return match ($action) {
-            'list' => new ListProfiles(),
+            'list' => new Scan(),
             'create' => new Create(),
             'copy' => new Copy(),
             'delete' => new Delete(),
