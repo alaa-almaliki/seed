@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    #=============================================================#
+    # Connection, add your own database, username and password    #
+    #=============================================================#
     'mysql' => [
         'driver' => 'Pdo_Mysql',
         'database' => '',
@@ -13,10 +16,29 @@ return [
         'charset' => 'utf8',
     ],
 
+    #=============================================================#
+    # Mysqldump options                                           #
+    #=============================================================#
+    'mysqldump' => [
+        'options' => [
+            '--routines',
+            '--single-transaction',
+            '--quick',
+            '--no-tablespaces',
+            '--skip-lock-tables',
+        ],
+        'exclude_tables' => [
+            'table_1',
+            'table_2',
+            'table_3',
+        ],
+    ],
+
     'sed' => [
         #=============================================================#
         # Execute find and replace see sample file                    #
         #=============================================================#
+
         #'1d',
         #"s,DEFINER=[^*]*\*,\*,g",
         #"s,^INSERT INTO,INSERT IGNORE INTO,g",

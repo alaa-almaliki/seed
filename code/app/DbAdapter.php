@@ -25,16 +25,17 @@ class DbAdapter
         return static::$instance;
     }
 
-    public function execute(callable $fn): void
+    public function execute(callable $fn, bool $transactional = true): void
     {
+        $transaction = new Transaction($this->getDbAdapter()->getDriver()?->getConnection(), $transactional);
         try {
-            $this->getDbAdapter()->getDriver()?->getConnection()->beginTransaction();
+            $transaction->begin();
             $this->start();
             $fn($this->getDbAdapter());
             $this->end();
-            $this->getDbAdapter()->getDriver()?->getConnection()->commit();
+            $transaction->commit();
         } catch (Throwable $e) {
-            $this->getDbAdapter()->getDriver()?->getConnection()->rollback();
+            $transaction->rollback();
             throw $e;
         }
     }

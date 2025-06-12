@@ -70,6 +70,20 @@ if [ "$1" = 'mysql' ]; then
     exit 1
 fi
 
+# Copy files from Container to host
+# i.e /var/www/html/vendor to code/vendor
+if [ "$1" = 'copy_from_container' ]; then
+    "$path"/bin/cp host "$2"
+    exit 1
+fi
+
+# Copy files to Container from host
+# i.e code/vendor to /var/www/html/vendor
+if [ "$1" = 'copy_to_container' ]; then
+    "$path"/bin/cp container "$2"
+    exit 1
+fi
+
 # Add root to container ip
 if [ "$1" = 'host:mysql' ]; then
     "$path"/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
@@ -92,16 +106,21 @@ if [ "$1" = 'profiles' ]; then
     exit 1
 fi
 
+
+if [ -z "$1" ]; then
+  "$path"/bin/exec php seed seed -h
+  exit 1
+fi
+
 if [ -f "$1" ]; then
     file=$(realpath "$1")
     file_basename=$(basename "$file")
     destination="$path/code/db/$file_basename"
 fi
 
-
 # exit if sql file is not provided
 if [ ! -f "$file" ]; then
-  "$path"/bin/exec php seed seed -h
+  echo -e "Please provide a dump file"
   exit 1
 fi
 
@@ -112,6 +131,6 @@ if [ -f "$file" ]; then
     /bin/cp "$file" "$destination"
     sleep 2
   fi
-
-  "$path"/bin/exec php seed seed "$file_basename" "--profile=$3"
+  echo "$@"
+  "$path"/bin/exec php seed seed "$@"
 fi

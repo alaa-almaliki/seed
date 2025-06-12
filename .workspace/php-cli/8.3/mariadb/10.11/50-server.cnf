@@ -26,7 +26,7 @@ basedir                 = /usr
 # localhost which is more compatible and is not less secure.
 #bind-address            = 127.0.0.1
 
-# Seed modification - Originally commented
+# Seed modification - See above originally commented
 bind-address            = 0.0.0.0
 
 #

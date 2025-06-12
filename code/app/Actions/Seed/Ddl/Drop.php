@@ -14,8 +14,8 @@ class Drop
         DbAdapter::create($config)->execute(static function (Adapter $adapter) use ($ddl): void {
             if (!empty($ddl) && !is_array(current($ddl))) {
                 $tables = count($ddl) === 1 ? array_pop($ddl) : implode(',', $ddl);
-                $adapter->query(sprintf('DROP TEMPORARY TABLE IF EXISTS %s', $tables), Adapter::QUERY_MODE_EXECUTE);
+                $adapter->query(sprintf('DROP TABLE IF EXISTS %s', $tables), Adapter::QUERY_MODE_EXECUTE);
             }
-        });
+        }, false);
     }
 }

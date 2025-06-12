@@ -14,9 +14,9 @@ class Import implements Action
 {
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $sqlFile = SEED_ROOT . '/db/' . $input->getArgument('file');
+        $sqlFile = SEED_ROOT . '/db/' . basename($input->getArgument('file'));
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
-        $deleteFile = $input->getOption('delete-file');
+        $deleteFile = $input->getParameterOption('delete-file');
 
         $command = 'mysql -uroot';
 
@@ -29,7 +29,7 @@ class Import implements Action
         $output->writeln(sprintf('importing database %s from %s', $mysql['database'], $sqlFile));
         $this->importDatabase($command, $mysql, $sqlFile);
 
-        if ($deleteFile) {
+        if ($deleteFile !== null) {
             unlink($sqlFile);
         }
 
