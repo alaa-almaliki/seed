@@ -92,13 +92,16 @@ if [ "$1" = 'profiles' ]; then
     exit 1
 fi
 
-file=$(realpath "$1")
-file_basename=$(basename "$file")
-destination="$path/code/db/$file_basename"
+if [ -f "$1" ]; then
+    file=$(realpath "$1")
+    file_basename=$(basename "$file")
+    destination="$path/code/db/$file_basename"
+fi
+
 
 # exit if sql file is not provided
 if [ ! -f "$file" ]; then
-  echo -e "Provide SQL file please"
+  "$path"/bin/exec php seed seed -h
   exit 1
 fi
 
