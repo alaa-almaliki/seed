@@ -24,9 +24,9 @@ basedir                 = /usr
 
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
-#bind-address            = 127.0.0.1 # commented by seed
+#bind-address            = 127.0.0.1
 
-# Seed modification
+# Seed modification - Originally commented
 bind-address            = 0.0.0.0
 
 #

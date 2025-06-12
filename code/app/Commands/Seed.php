@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Seed\Commands;
 
+use Seed\Actions\Seed\Ddl;
 use Seed\Actions\Seed\Import;
 use Seed\Actions\Seed\Sed;
 use Symfony\Component\Console\Command\Command;
@@ -25,6 +26,7 @@ class Seed extends Command
         parent::configure();
         $this->addArgument('file', InputArgument::REQUIRED, 'Action');
         $this->addOption('profile', mode: InputOption::VALUE_REQUIRED);
+        $this->addOption('delete-file', mode: InputOption::VALUE_OPTIONAL, default: InputOption::VALUE_NONE);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -33,6 +35,7 @@ class Seed extends Command
             [
                 new Sed(),
                 new Import(),
+                new Ddl(),
             ]
         );
 

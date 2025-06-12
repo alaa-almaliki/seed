@@ -2,9 +2,9 @@
 
 set -e
 
-path=$(dirname $(dirname "${BASH_SOURCE[0]}"))
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 
-source $path/.env
+source "$path"/.env
 
 [ -z "$1" ] && echo "Please specify a CLI command (ex. ls)" && exit
-docker-compose -f $path/docker-compose.yml exec -uroot ${APP_NAME} "$@"
+docker-compose -f "$path"/docker-compose.yml exec -uroot "$APP_NAME" "$@"

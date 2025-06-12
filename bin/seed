@@ -2,7 +2,7 @@
 
 set -e
 
-path=$(realpath $(dirname $(dirname "${BASH_SOURCE[0]}")))
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 
 # Set paths
 if [ "$1" = 'set:path' ]; then
@@ -10,103 +10,105 @@ if [ "$1" = 'set:path' ]; then
      if ! grep -q "$path" ~/.zshrc; then
            echo "export PATH=\"$path/bin:\$PATH"\" | tee -a ~/.zshrc
            sleep 1
-           source ~/.zshrc
+           source "$HOME"/.zshrc
      fi
   fi
+  exit 1
 fi
 
 # build docker container
 if [ "$1" = 'build' ]; then
-    $path/bin/build
+    "$path"/bin/build
     exit 1
 fi
 
 # rebuild docker container from scratch
 if [ "$1" = 'rebuild' ]; then
-    $path/bin/destroy && $path/bin/build --no-cache
+    "$path"/bin/destroy && "$path"/bin/build --no-cache
     exit 1
 fi
 
 # start docker container
 if [ "$1" = 'up' ]; then
-    $path/bin/up
+    "$path"/bin/up
     exit 1
 fi
 
 # stop docker container
 if [ "$1" = 'stop' ]; then
-    $path/bin/stop
+    "$path"/bin/stop
     exit 1
 fi
 
 # restart docker container
 if [ "$1" = 'restart' ]; then
-    $path/bin/restart
+    "$path"/bin/restart
     exit 1
 fi
 
 # destroy docker container
 if [ "$1" = 'destroy' ]; then
-    $path/bin/destroy
+    "$path"/bin/destroy
     exit 1
 fi
 
 # changes filesystem ownership
 if [ "$1" = 'chown' ]; then
-  $path/bin/exec chown -R root /var/www/html
+  "$path"/bin/exec chown -R root /var/www/html
   exit 1
 fi
 
 # ssh into the container
 if [ "$1" = 'ssh' ]; then
-    $path/bin/exec bash
+    "$path"/bin/exec bash
     exit 1
 fi
 
 # Access mysql
 if [ "$1" = 'mysql' ]; then
-    $path/bin/exec mysql
+    "$path"/bin/exec mysql
     exit 1
 fi
 
 # Add root to container ip
-if [ "$1" = 'mysql:host' ]; then
-    $path/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
+if [ "$1" = 'host:mysql' ]; then
+    "$path"/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
     sleep 1
-    $path/bin/exec mysql -e "GRANT ALL PRIVILEGES ON *.* TO root@${CONTAINER_IP} WITH GRANT OPTION;"
+    "$path"/bin/exec mysql -e "GRANT ALL PRIVILEGES ON *.* TO root@${CONTAINER_IP} WITH GRANT OPTION;"
     sleep 1
-    $path/bin/exec mysql -e "FLUSH PRIVILEGES;"
+    "$path"/bin/exec mysql -e "FLUSH PRIVILEGES;"
     exit 1
 fi
 
 # run composer
 if [ "$1" = 'composer' ]; then
-  $path/bin/exec "$@"
+  "$path"/bin/exec "$@"
   exit 1
 fi
 
 # run profiles commands
 if [ "$1" = 'profiles' ]; then
-    $path/bin/exec php seed "$@"
+    "$path"/bin/exec php seed "$@"
     exit 1
 fi
 
+file=$(realpath "$1")
+file_basename=$(basename "$file")
+destination="$path/code/db/$file_basename"
+
 # exit if sql file is not provided
-if [ ! -f "$1" ]; then
+if [ ! -f "$file" ]; then
   echo -e "Provide SQL file please"
   exit 1
 fi
 
 # start seed
-if [  -f "$1" ]; then
-     echo -e "Copying $1 to $path/code/db/$(basename $1)"
-    if [ $(basename $1) = "$1" ]; then
-      cp $(pwd)/"$1" $path/code/db/"$(basename $1)"
-    else
-        cp "$1" $path/code/db/"$(basename $1)"
-    fi
-
+if [ -f "$file" ]; then
+  if [ "$file" != "$destination" ]; then
+    echo -e "Copying $file to $destination"
+    /bin/cp "$file" "$destination"
     sleep 2
+  fi
 
-    $path/bin/exec php seed seed $(basename $1) "--profile=$3"
+  "$path"/bin/exec php seed seed "$file_basename" "--profile=$3"
 fi

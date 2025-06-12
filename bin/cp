@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
+
+source "$path"/.env
+
+container="$(docker compose ps -q "$APP_NAME"|awk '{print $1}')"
+if [ "$1" = "container" ]; then
+      echo -e "Copying $2 to container:/var/www/html"
+      docker cp "$path"/code/"$2" "$container":/var/www/html/ \
+      && "$path"/bin/exec chown -R root /var/www/html/"$2"
+fi
+
+if [ "$1" = 'host' ]; then
+    echo -e "Copying $2 to host:./code"
+    docker cp "$container":/var/www/html/"$2" "$path/code/"
+fi

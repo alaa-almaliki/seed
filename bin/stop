@@ -2,6 +2,6 @@
 
 set -e
 
-path=$(dirname $(dirname "${BASH_SOURCE[0]}"))
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 
-docker-compose -f $path/docker-compose.yml stop "$@"
+docker-compose -f "$path"/docker-compose.yml stop "$@"

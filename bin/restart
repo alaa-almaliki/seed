@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path=$(dirname $(dirname "${BASH_SOURCE[0]}"))
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 
-$path/bin/stop "$@"
-$path/bin/up "$@"
+"$path"/bin/stop "$@"
+"$path"/bin/up "$@"

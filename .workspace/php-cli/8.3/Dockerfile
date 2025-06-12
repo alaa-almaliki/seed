@@ -1,4 +1,4 @@
-FROM php:8.4-cli
+FROM php:8.3-cli
 
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
@@ -11,6 +11,8 @@ RUN apt-get update \
     vim \
     zip \
     unzip
+
+RUN docker-php-ext-install pdo pdo_mysql
 
 
 

@@ -17,7 +17,8 @@
   ],
   "require": {
     "symfony/console": "^7.3",
-    "symfony/finder": "^7.3"
+    "symfony/finder": "^7.3",
+    "laminas/laminas-db": "^2.20"
   },
   "autoload": {
     "psr-4": {

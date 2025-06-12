@@ -16,16 +16,22 @@ class Import implements Action
     {
         $sqlFile = SEED_ROOT . '/db/' . $input->getArgument('file');
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
+        $deleteFile = $input->getOption('delete-file');
+
         $command = 'mysql -uroot';
 
         $output->writeln('Creating database ' . $mysql['database']);
         $this->createDatabase($command, $mysql);
 
-        $output->writeln('Creating user ' . $mysql['user']);
+        $output->writeln('Creating user ' . $mysql['username']);
         $this->createUser($command, $mysql);
 
         $output->writeln(sprintf('importing database %s from %s', $mysql['database'], $sqlFile));
         $this->importDatabase($command, $mysql, $sqlFile);
+
+        if ($deleteFile) {
+            unlink($sqlFile);
+        }
 
         return Command::SUCCESS;
     }
@@ -35,15 +41,15 @@ class Import implements Action
         $deleteUserStatement = sprintf(
             '%s -e "DROP USER IF EXISTS \'%s\'@\'%s\';"',
             $command,
-            $mysql['user'],
-            $mysql['host'],
+            $mysql['username'],
+            $mysql['hostname'],
         );
 
         $createUserStatement = sprintf(
             '%s -e "CREATE USER \'%s\'@\'%s\' IDENTIFIED BY \'%s\';"',
             $command,
-            $mysql['user'],
-            $mysql['host'],
+            $mysql['username'],
+            $mysql['hostname'],
             $mysql['password'],
         );
 
@@ -51,8 +57,8 @@ class Import implements Action
             '%s -e "GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@\'%s\';"',
             $command,
             $mysql['database'],
-            $mysql['user'],
-            $mysql['host'],
+            $mysql['username'],
+            $mysql['hostname'],
         );
         
         exec($deleteUserStatement);
@@ -60,6 +66,27 @@ class Import implements Action
         exec($privileges);
         exec($command . ' -e "FLUSH PRIVILEGES;"');
 
+        if ($mysql['hostname'] !== 'localhost') {
+            $localhostPrivileges = sprintf(
+                '%s -e "GRANT USAGE ON %s.* to \'%s\'@localhost" IDENTIFIED BY \'%s\';',
+                $command,
+                $mysql['database'],
+                $mysql['username'],
+                $mysql['password'],
+            );
+
+            exec($localhostPrivileges);
+
+
+            $localhostPrivilegesWithOptions = sprintf(
+                '%s -e GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@localhost WITH GRANT OPTION;',
+                $command,
+                $mysql['database'],
+                $mysql['username'],
+            );
+            exec($localhostPrivilegesWithOptions);
+            exec($command . ' -e "FLUSH PRIVILEGES;"');
+        }
     }
 
     private function createDatabase(string $command, array $mysql): void
@@ -82,6 +109,6 @@ class Import implements Action
     {
         exec(sprintf('%s -e "use %s";', $command, $mysql['database']));
         exec(sprintf('%s -e "SET SESSION SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\';"', $command));
-        exec(sprintf('%s -f --skip-definer %s < %s;', $command, $mysql['database'], $sqlFile));
+        exec(sprintf('%s -f %s < %s;', $command, $mysql['database'], $sqlFile));
     }
 }
