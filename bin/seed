@@ -131,6 +131,6 @@ if [ -f "$file" ]; then
     /bin/cp "$file" "$destination"
     sleep 2
   fi
-  echo "$@"
+  
   "$path"/bin/exec php seed seed "$@"
 fi

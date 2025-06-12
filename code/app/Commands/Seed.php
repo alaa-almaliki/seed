@@ -42,6 +42,7 @@ class Seed extends Command
         );
 
         $seed->run($input, $output);
+        $output->writeln('Done');
         return Command::SUCCESS;
     }
 }

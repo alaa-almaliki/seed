@@ -16,7 +16,7 @@ class Import implements Action
     {
         $sqlFile = SEED_ROOT . '/db/' . basename($input->getArgument('file'));
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
-        $deleteFile = $input->getParameterOption('delete-file');
+        $deleteFile = $input->getParameterOption('--delete-file');
 
         $command = 'mysql -uroot';
 
