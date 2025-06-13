@@ -8,12 +8,12 @@ return [
     #=============================================================#
     'mysql' => [
         'driver' => 'Pdo_Mysql',
-        'database' => '',
-        'username' => '',
-        'password' => '',
-        'hostname' => '127.0.0.1',
-        'port' => '3306',
-        'charset' => 'utf8',
+        'database' => '', // Database name is required
+        'username' => '', // User is required
+        'password' => '', // Password is required
+        'hostname' => '127.0.0.1', // You can use localhost if you wish
+        'port' => '3306', // port is always 3306 unless you want to make changes to the mariadb server
+        'charset' => 'utf8', // charset
     ],
 
     #=============================================================#
@@ -42,6 +42,7 @@ return [
         #'1d',
         #"s,DEFINER=[^*]*\*,\*,g",
         #"s,^INSERT INTO,INSERT IGNORE INTO,g",
+        #"s,www.live.com,www.local.test,g",
     ],
 
     'ddl' => [
