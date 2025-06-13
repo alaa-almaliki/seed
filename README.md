@@ -22,7 +22,7 @@ The command above will do the following:
 - If the option `--delete-file` was provided, it will delete the copied SQL file `code/db/file_name.sql`
 
 > [!NOTE]
-> seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute.
+> seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are problems.
 
 ## How it works
 
