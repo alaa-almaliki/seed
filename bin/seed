@@ -3,14 +3,15 @@
 set -e
 
 path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
+source "$path"/.env
 
 # Set paths
 if [ "$1" = 'set:path' ]; then
   if [ -f ~/.zshrc ]; then
-     if ! grep -q "$path" ~/.zshrc; then
-           echo "export PATH=\"$path/bin:\$PATH"\" | tee -a ~/.zshrc
+     if ! grep -q "$path" "$ZSH_FILE"; then
+           echo "export PATH=\"$path/bin:\$PATH"\" | tee -a "$ZSH_FILE"
            sleep 1
-           source "$HOME"/.zshrc
+           source "$ZSH_FILE"
      fi
   fi
   exit 1
@@ -70,20 +71,6 @@ if [ "$1" = 'mysql' ]; then
     exit 1
 fi
 
-# Copy files from Container to host
-# i.e /var/www/html/vendor to code/vendor
-if [ "$1" = 'copy_from_container' ]; then
-    "$path"/bin/cp host "$2"
-    exit 1
-fi
-
-# Copy files to Container from host
-# i.e code/vendor to /var/www/html/vendor
-if [ "$1" = 'copy_to_container' ]; then
-    "$path"/bin/cp container "$2"
-    exit 1
-fi
-
 # Add root to container ip
 if [ "$1" = 'host:mysql' ]; then
     "$path"/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
@@ -98,6 +85,20 @@ fi
 if [ "$1" = 'composer' ]; then
   "$path"/bin/exec "$@"
   exit 1
+fi
+
+# Copy files from Container to host
+# i.e /var/www/html/vendor to code/vendor
+if [ "$1" = 'copy_from_container' ]; then
+    "$path"/bin/copy host "$2"
+    exit 1
+fi
+
+# Copy files to Container from host
+# i.e code/vendor to /var/www/html/vendor
+if [ "$1" = 'copy_to_container' ]; then
+    "$path"/bin/copy container "$2"
+    exit 1
 fi
 
 # run profiles commands
@@ -131,6 +132,6 @@ if [ -f "$file" ]; then
     /bin/cp "$file" "$destination"
     sleep 2
   fi
-  
+
   "$path"/bin/exec php seed seed "$@"
 fi
