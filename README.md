@@ -21,6 +21,7 @@ The command above will do the following:
   `code/db/seed-{database_name}-{timestamp}.sql`
 - If the option `--delete-file` was provided, it will delete the copied SQL file `code/db/file_name.sql`
 
+**seed** Used and tested on **Apple Mac** only
 ## How it works
 
 ### 1. Setup `seed`
