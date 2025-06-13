@@ -27,10 +27,11 @@ The command above will do the following:
 - Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere
 
 ### 2. Setup profiles
+After building the **seed** container, you can do the following:
 - Run `bin/seed profiles create www.example.com`
 - This will create `code/profiles/www.example.com/env.php` file
 - Configure `env.php` file as you wish
-  - Section `mysql` is the MySQL database credentials and options you wish to create inside the container
+  - Section `mysql` is the MySQL database credentials and options you wish to create inside the **seed** container
   - Section `mysqldump` will be the settings related the database export in the final step
   - Section `sed` is the find and replace settings, it will be performed on SQL file before the import
   - Section `ddl` has the following settings:
@@ -41,6 +42,7 @@ The command above will do the following:
     - `drop` will drop tables
 
 ### 3. Running `seed`
+After setting up profiles, you can run **seed** as follows:
 - Run `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
 - Wait for the script to run
 - Once done, the file `code/db/seed-{database_name}-{timestamp}.sql` will be available for you to use
