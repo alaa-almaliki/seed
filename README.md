@@ -44,7 +44,7 @@ After building the **seed** container, you can do the following:
 ### 3. Running `seed`
 After setting up profiles, you can run **seed** as follows:
 - Run `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
-- Wait for the script to run
+- Wait for the script to finish
 - Once done, the file `code/db/seed-{database_name}-{timestamp}.sql` will be available for you to use
 
 ## Profiles
@@ -71,6 +71,6 @@ The command `bin/seed profiles` has the following:
 | `bin/seed host:mysql`                                                        | Allow you to access the database from any MySQL client through container private network using host 0.0.0.0, port:3307 user:root and password:root    |
 | `bin/seed composer {install}`                                                | Runs composer inside the container                                                                                                                    |
 | `bin/seed profiles`                                                          | Runs profiles actions as create, delete, copy and list                                                                                                |
-| `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  
-| `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  
+| `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  |
+| `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  |
 | `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
