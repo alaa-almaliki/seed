@@ -1,6 +1,6 @@
 # seed
 
-**seed** automates the tasks that are done repeatedly and frequently to remove production and test server variables after exporting the database.
+**seed** automates the tasks that are done repeatedly and frequently to remove production and test server variables from SQL dump files.
 
 Command `bin/seed path/to/file.sql --profile www.example.com --delete-file`
 

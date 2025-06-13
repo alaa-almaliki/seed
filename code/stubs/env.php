@@ -28,9 +28,9 @@ return [
             '--skip-lock-tables',
         ],
         'exclude_tables' => [
-            'table_1',
-            'table_2',
-            'table_3',
+//            'table_1',
+//            'table_2',
+//            'table_3',
         ],
     ],
 

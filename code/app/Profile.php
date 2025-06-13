@@ -33,9 +33,11 @@ class Profile
             if (null !== $section) {
                 return static::$profile[$section] ?? [];
             }
+
+            return static::$profile;
         }
         static::$profile = require static::$profileDir . $name . '/env.php';
-        return static::$profile[$section] ?? [];
+        return static::$profile[$section] ?? static::$profile;
     }
 
     public static function create(string $name): bool
