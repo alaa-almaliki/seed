@@ -13,8 +13,8 @@ The command above will do the following:
   - Delete data
   - Truncate tables
   - Drop Tables
-- Runs mysqldump command as the final step given you a new SQL dump file inside code/db/seed-{database_name}-timestamp.sql
-- If --delete-file was provided, it will delete the original SQL file **path/to/file.sql**
+- Runs **mysqldump** command as the final step given you a new SQL dump file inside **code/db/seed-{database_name}-{timestamp}.sql**
+- If the option **--delete-file** was provided, it will delete the original SQL file **path/to/file.sql**
 
 ## How it works
 
@@ -38,12 +38,3 @@ The command above will do the following:
 | `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  
 | `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  
 | `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
-
-## export path `export PATH="./seed/bin:$PATH"` in ~/.zsrhc
-
-## To access databases from the host:
-
-```shell
-mysql -e "GRANT USAGE ON *.* to root@192.168.148.1 IDENTIFIED BY 'root';"
-mysql -e "GRANT ALL PRIVILEGES ON *.* TO root@192.168.148.1 WITH GRANT OPTION;"
-```
