@@ -30,7 +30,7 @@ class Import implements Action
         $this->importDatabase($command, $mysql, $sqlFile);
 
         if ($deleteFile !== null) {
-            unlink($sqlFile);
+            //unlink($sqlFile);
         }
 
         return Command::SUCCESS;

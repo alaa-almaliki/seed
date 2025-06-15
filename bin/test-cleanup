@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+rm -rf "$profile"
+rm -rf "$path"/code/db/sakila*.sql
+bin/exec mysql -e "drop database if exists sakila"
+bin/exec mysql -e "drop user if exists sakila"

@@ -8,9 +8,9 @@ return [
     #=============================================================#
     'mysql' => [
         'driver' => 'Pdo_Mysql',
-        'database' => '', // Database name is required
-        'username' => '', // User is required
-        'password' => '', // Password is required
+        'database' => 'sakila', // Database name is required
+        'username' => 'sakila', // User is required
+        'password' => 'sakila', // Password is required
         'hostname' => '127.0.0.1', // You can use localhost if you wish
         'port' => '3306', // port is always 3306 unless you want to make changes to the mariadb server
         'charset' => 'utf8mb4', // charset
@@ -28,9 +28,7 @@ return [
             '--skip-lock-tables',
         ],
         'exclude_tables' => [
-//            'table_1',
-//            'table_2',
-//            'table_3',
+            'payment'
         ],
     ],
 
@@ -40,9 +38,11 @@ return [
         #=============================================================#
 
         '1d',
-        #"s,DEFINER=[^*]*\*,\*,g",
-        #"s,^INSERT INTO,INSERT IGNORE INTO,g",
-        #"s,www.live.com,www.local.test,g",
+        "s,DEFINER=[^*]*\*,\*,g",
+        "s,CREATE DEFINER=\`root\`@\`localhost\` FUNCTION,CREATE FUNCTION,g",
+        "s,CREATE DEFINER=\`root\`@\`localhost\` PROCEDURE,CREATE PROCEDURE,g",
+        "s,INSERT INTO,INSERT IGNORE INTO,g",
+        "s,MySakila Drive,My Sakila Drive,g",
     ],
 
     'ddl' => [
@@ -50,56 +50,53 @@ return [
         # Execute insert into table                                   #
         #=============================================================#
         'insert' => [
-//            'table_1' => [
-//                [
-//                    'field_1' => 'value_1',
-//                    'field_2' => 'value_2',
-//                    'field_3' => 'value_3',
-//                    'field_...999' => 'value_...999'
-//                ],
-//                'table_2' => '...'
-//            ]
+            'address' => [
+                [
+                    'address' => '47 MySeed Drive',
+                    'address2' => 'Seed Town',
+                    'district' => 'Attika',
+                    'city_id' => '38',
+                    'postal_code' => '83579',
+                    'phone' => '1234567890',
+                    'last_update' => '2025-06-13 19:35:57',
+                ],
+            ]
         ],
 
         #=============================================================#
         # Execute update table                                        #
         #=============================================================#
         'update' => [
-//            'table_1' => [
-//                [
-//                    'field_name' => 'field_1',
-//                    'value' => '127.0.0.1',
-//                    'condition' => 'where path = "acme.settings.allowed_ips" limit 1',
-//                ],
-//            ],
+            'customer' => [
+                [
+                    'field' => 'first_name',
+                    'value' => 'Seed',
+                    'condition' => 'where customer_id = 1 limit 1',
+                ],
+            ],
         ],
 
         #=============================================================#
         # executes delete from table                                  #
         #=============================================================#
         'delete' => [
-//            'table_1' => [
-//                // condition
-//                'where ip  = "127.0.0.1" limit 1',
-//            ],
+            'rental' => [
+                'where rental_id  = 1 limit 1',
+            ],
         ],
 
         #=============================================================#
         # Execute truncate table                                      #
         #=============================================================#
         'truncate' => [
-//            'table_1',
-//            'table_2',
-//            'table_3',
+            'film_text'
         ],
 
         #=============================================================#
         # Execute drop table                                          #
         #=============================================================#
         'drop' => [
-//            'table_1',
-//            'table_2',
-//            'table_3',
+            'language',
         ],
     ]
 ];

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
+source "$path"/bin/test-utils
+
+profile="$path"/code/profiles/www.seed.test
+
+
+echo -e "Testing seed..."
+source "$path"/bin/test-profiles
+source "$path"/bin/test-copy-dump-file
+source "$path"/bin/test-sed
+source "$path"/bin/test-import
+source "$path"/bin/test-ddl
+source "$path"/bin/test-export
+source "$path"/bin/test-cleanup
+
+
+
+

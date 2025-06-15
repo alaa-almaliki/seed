@@ -14,8 +14,8 @@ class Export implements Action
 {
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $mysql =  Profile::load($input->getOption('profile'), 'mysql');
-        $mysqlDump =  Profile::load($input->getOption('profile'), 'mysqldump');
+        $mysql =  Profile::load($profile = $input->getOption('profile'), 'mysql');
+        $mysqlDump =  Profile::load($profile, 'mysqldump');
 
         $ignoreTables = '';
         if (!empty($mysqlDump['exclude_tables'] ?? [])) {
@@ -29,15 +29,17 @@ class Export implements Action
             implode(' ', $mysqlDump['options']),
             $ignoreTables,
             $mysql['database'],
-            $this->createDumpFile($mysql['database'])
+            $outputFile = $this->createOutputFile($mysql['database'])
         );
 
         $output->writeln('Creating dump file');
         exec($command);
+        $output->writeln('Dump file created at ' . $outputFile);
+
         return Command::SUCCESS;
     }
 
-    private function createDumpFile(string $database): string
+    private function createOutputFile(string $database): string
     {
         $file = [
             $database,

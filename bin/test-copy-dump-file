@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+#Test copy dump file
+echo -e "Testing copying dump file"
+
+#Before copying
+if [ ! -f "$path"/code/db/sakila.sql ]; then
+    success "Passed: SQL dump file sakila.sql doesn't exist yet"
+else
+    error "Failed: SQL dump file sakila.sql already exists"
+fi
+
+"$path"/bin/copy-dump-file "$path"/test-data/db/sakila.sql >/dev/null
+
+#After copying
+if [ -f "$path"/code/db/sakila.sql ]; then
+    success "Passed: SQL dump file sakila.sql copied successfully"
+else
+    error "Failed: SQL dump file sakila.sql couldn't be copied"
+fi

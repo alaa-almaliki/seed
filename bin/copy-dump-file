@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
+
+if [ -f "$1" ]; then
+    file=$(realpath "$1")
+    file_basename=$(basename "$file")
+    destination="$path/code/db/$file_basename"
+fi
+
+# exit if sql file is not provided
+if [ ! -f "$file" ]; then
+  echo -e "Please provide a dump file"
+  exit 1
+fi
+
+# start seed
+if [ -f "$file" ]; then
+  if [ "$file" != "$destination" ]; then
+    echo -e "Copying $file to $destination"
+    /bin/cp "$file" "$destination"
+    sleep 1
+  fi
+fi

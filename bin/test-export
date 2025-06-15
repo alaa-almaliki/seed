@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+#Test export
+echo -e "Testing export"
+
+
+if ! find code/db/sakila-seed*.sql -quit &> /dev/null; then
+  success "Passed: export file does not exist yet"
+else
+  error "Failed: export file already exists"
+fi
+
+"$path"/bin/exec php seed export --profile www.seed.test --quiet
+
+if find code/db/sakila-seed*.sql -quit &> /dev/null; then
+  success "Passed: database sakila exported successfully"
+else
+  error "Failed: database sakila couldn't be exported"
+fi

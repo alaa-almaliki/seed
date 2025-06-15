@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Create implements Action
 {
-
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         if (Profile::create($name = $input->getOption('name'))) {

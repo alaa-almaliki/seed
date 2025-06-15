@@ -1,0 +1,68 @@
+#!/bin/bash
+set -e
+
+#Test create profile
+echo -e "Testing profiles"
+
+if [ ! -d "$profile" ]; then
+  success "Passed: profile www.seed.test does not exist yet"
+else
+  error "Failed: profile www.seed.test already exists"
+fi
+
+
+"$path"/bin/seed profiles create --name "www.seed.test" --quiet
+
+if [ -d "$profile" ]; then
+  success "Passed: profile www.seed.test created successfully"
+else
+  error "Failed: profile www.seed.test couldn't be created"
+fi
+
+if [ -f "$profile"/env.php ]; then
+    success "Passed: Configuration file env.php was created successfully in profile www.seed.test"
+else
+    error "Failed: Configuration file couldn't be created in profile www.seed.test"
+fi
+
+rm -rf  "$profile"/env.php
+/bin/cp "$path"/test-data/www.seed.test/env.php "$profile"
+
+#Test copy profile
+"$path"/bin/seed profiles copy --source www.seed.test --target www.seed.test-copy --quiet
+
+if [ -d "$profile"-copy ]; then
+  success "Passed: profile www.seed.test-copy copied from www.seed.test successfully"
+else
+  error "Failed: profile www.seed.test-copy couldn't be copied from www.seed.test"
+fi
+
+if [ -f "$profile"-copy/env.php ]; then
+    success "Passed: Configuration file env.php was created successfully in profile www.seed.test-copy"
+else
+    error "Failed: Configuration file couldn't be created in profile www.seed.test-copy"
+fi
+
+#Test list profiles
+profile_list=$("$path"/bin/seed profiles list)
+if printf '%s\0' ${profile_list[@]} | grep -Fxqz -- 'www.seed.test'; then
+    success "Passed: Deleting profile www.seed.test-copy was successful"
+    else
+      error "Failed: Couldn't delete profile www.seed.test-copy"
+fi
+
+#Test delete profile
+
+"$path"/bin/seed profiles delete --name www.seed.test-copy --quiet
+
+if [ ! -d "$profile"-copy ]; then
+  success "Passed: profile www.seed.test-copy deleted successfully"
+else
+  error "Failed: profile www.seed.test-copy couldn't be deleted"
+fi
+
+if [ ! -f "$profile"-copy/env.php ]; then
+    success "Passed: Configuration file env.php was deleted successfully in profile www.seed.test-copy"
+else
+    error "Failed: Configuration file couldn't be delete in profile www.seed.test-copy"
+fi

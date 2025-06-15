@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+#Test import
+echo -e "Testing Import"
+"$path"/bin/exec php seed import sakila.sql --profile www.seed.test --quiet
+
+val=$("$path"/bin/exec mysql -uroot -e "show databases" | grep sakila)
+
+if [ "$val" == "sakila" ]; then
+      success "Passed: databases sakila imported successfully"
+    else
+      error "Failed: couldn't import database sakila"
+fi

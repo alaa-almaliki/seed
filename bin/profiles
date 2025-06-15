@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+# run profiles commands
+if [ "$1" = 'profiles' ]; then
+  "$path"/bin/exec php seed "$@"
+  exit 0
+fi

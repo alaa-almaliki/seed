@@ -15,22 +15,27 @@ const SEED_ROOT = __DIR__;
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Seed\Commands\Ddl;
+use Seed\Commands\Export;
+use Seed\Commands\Import;
 use Seed\Commands\Profiles;
-use Seed\Commands\Seed;
+use Seed\Commands\Sed;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Finder;
 
 $finder = new Finder();
 $finder->in('./');
 
 
-use Symfony\Component\Console\Application;
-
 $application = new Application();
 
 $application->addCommands(
     [
         new Profiles(),
-        new Seed(),
+        new Sed(),
+        new Import(),
+        new Ddl(),
+        new Export(),
     ]
 );
 

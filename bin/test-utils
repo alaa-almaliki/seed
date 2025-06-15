@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+check="\xE2\x9C\x94"
+
+success() {
+  echo -e "${GREEN}""${check}" "$1""${NC}"
+}
+
+error() {
+  echo -e "${RED}""x $1""${NC}"
+}

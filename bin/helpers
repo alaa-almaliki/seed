@@ -1,0 +1,103 @@
+#!/bin/bash
+set -e
+
+# Set paths
+if [ "$1" = 'set:path' ]; then
+  if [ -f ~/.zshrc ]; then
+     if ! grep -q "$path" "$ZSH_FILE"; then
+           echo "export PATH=\"$path/bin:\$PATH"\" | tee -a "$ZSH_FILE"
+           sleep 1
+           source "$ZSH_FILE"
+     fi
+  fi
+  exit 0
+fi
+
+# build docker container
+if [ "$1" = 'build' ]; then
+    "$path"/bin/build
+    exit 0
+fi
+
+# rebuild docker container from scratch
+if [ "$1" = 'rebuild' ]; then
+    "$path"/bin/destroy && "$path"/bin/build --no-cache
+    exit 0
+fi
+
+# start docker container
+if [ "$1" = 'up' ]; then
+    "$path"/bin/up
+    exit 0
+fi
+
+# stop docker container
+if [ "$1" = 'stop' ]; then
+    "$path"/bin/stop
+    exit 0
+fi
+
+# restart docker container
+if [ "$1" = 'restart' ]; then
+    "$path"/bin/restart
+    exit 0
+fi
+
+# destroy docker container
+if [ "$1" = 'destroy' ]; then
+    "$path"/bin/destroy
+    exit 0
+fi
+
+# changes filesystem ownership
+if [ "$1" = 'chown' ]; then
+  "$path"/bin/exec chown -R root /var/www/html
+  exit 0
+fi
+
+# ssh into the container
+if [ "$1" = 'ssh' ]; then
+    "$path"/bin/exec bash
+    exit 0
+fi
+
+# Access mysql
+if [ "$1" = 'mysql' ]; then
+    "$path"/bin/exec "$@"
+    exit 0
+fi
+
+# Add root to container ip
+if [ "$1" = 'host:mysql' ]; then
+    "$path"/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
+    sleep 1
+    "$path"/bin/exec mysql -e "GRANT ALL PRIVILEGES ON *.* TO root@${CONTAINER_IP} WITH GRANT OPTION;"
+    sleep 1
+    "$path"/bin/exec mysql -e "FLUSH PRIVILEGES;"
+    exit 0
+fi
+
+# run composer
+if [ "$1" = 'composer' ]; then
+  "$path"/bin/exec "$@"
+  exit 0
+fi
+
+# Copy files from Container to host
+# i.e /var/www/html/vendor to code/vendor
+if [ "$1" = 'copy_from_container' ]; then
+    "$path"/bin/copy host "$2"
+    exit 0
+fi
+
+# Copy files to Container from host
+# i.e code/vendor to /var/www/html/vendor
+if [ "$1" = 'copy_to_container' ]; then
+    "$path"/bin/copy container "$2"
+    exit 0
+fi
+
+if [ "$1" == "test" ]; then
+    "$path"/bin/test
+    exit 0
+fi
