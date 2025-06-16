@@ -1,6 +1,7 @@
 # seed
 
-**seed** automates the database tasks that are done repeatedly and frequently to remove production and test server variables from
+**seed** automates the database tasks that are done repeatedly and frequently to remove production and test server
+variables from
 SQL dump files and replaces them with local environment variables.
 
 Command `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
@@ -28,7 +29,8 @@ The command above will do the following:
 - `bin/seed test`
 
 > [!NOTE]
-> seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are problems.
+> seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are
+> problems.
 
 ## How it works
 
@@ -38,19 +40,23 @@ The command above will do the following:
 - Go into seed folder - `cd seed`
 - Build the container `bin/seed build`
 - Run composer `bin/seed composer install`
-- Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere `seed profiles create www.example.com`
+- Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere
+  `seed profiles create www.example.com`
 
 ## 2. Configuration
+
 - Defaults are set in `.env` file
 - MariaDB is the only available option currently `SQL_SERVER=mariadb`
 - Versions (10.4, 10.6 and 10.11) are available currently `MARIADB_VERSION=10.11`
+- Bind port is set to `MYSQL_PORT=3307`, you can change it however you like.
+- Rebuild the **seed** container after changing these variables
 
 ### 3. Setup profiles
 
 After building the **seed** container, you can do the following:
 
 - Run `bin/seed profiles create www.example.com`
-- This will create `codevar//profiles/www.example.com/env.php` file
+- This will create `code/var/profiles/www.example.com/env.php` file
 - Configure `env.php` file as you wish
     - Section `mysql` is the MySQL database credentials and options you wish to create inside the **seed** container
     - Section `mysqldump` will be the settings related the database export in the final step
@@ -98,6 +104,8 @@ The command `bin/seed profiles` has the following:
 | `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  |
 | `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  |
 | `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
+| `bin/seed test`                                                              | Runs tests                                                                                                                                            |
 
 ## Contributions
+
 All contributions are welcome.
