@@ -2,6 +2,6 @@
 set -e
 
 rm -rf "$profile"
-rm -rf "$path"/code/db/sakila*.sql
+rm -rf "$path"/code/var/db/sakila*.sql
 bin/exec mysql -uroot -proot -e "drop database if exists sakila"
 bin/exec mysql -uroot -proot -e "drop user if exists sakila"

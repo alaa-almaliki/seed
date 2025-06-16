@@ -46,6 +46,6 @@ class Export implements Action
             'seed',
             date('YmdHi'),
         ];
-        return SEED_ROOT . '/db/' . implode('-', $file) . '.sql';
+        return SEED_ROOT . '/var/db/' . implode('-', $file) . '.sql';
     }
 }

@@ -7,19 +7,19 @@ echo -e "Testing Sed"
 
 #Before sed
 
-if grep -q "DEFINER=" code/db/sakila.sql; then
+if grep -q "DEFINER=" code/var/db/sakila.sql; then
       success "Passed: Original value found: DEFINER="
     else
       error "Failed: couldn't find original value: DEFINER="
 fi
 
-if grep -q "INSERT INTO" code/db/sakila.sql; then
+if grep -q "INSERT INTO" code/var/db/sakila.sql; then
       success "Passed: Original value found: INSERT INTO"
     else
       error "Failed: couldn't find original value: INSERT INTO"
 fi
 
-if grep -q "MySakila Drive" code/db/sakila.sql; then
+if grep -q "MySakila Drive" code/var/db/sakila.sql; then
       success "Passed: Original value found: MySakila Drive"
     else
       error "Failed: couldn't find original value: MySakila Drive"
@@ -28,31 +28,31 @@ fi
 "$path"/bin/exec php seed sed sakila.sql --profile www.seed.test --quiet
 
 
-if ! grep -q "DEFINER=" code/db/sakila.sql; then
+if ! grep -q "DEFINER=" code/var/db/sakila.sql; then
       success "Passed: Original value remove: DEFINER="
     else
       error "Failed: couldn't remove original value: DEFINER="
 fi
 
-if ! grep -q "INSERT INTO" code/db/sakila.sql; then
+if ! grep -q "INSERT INTO" code/var/db/sakila.sql; then
       success "Passed: Original value removed: INSERT INTO"
     else
       error "Failed: couldn't remove original value: INSERT INTO"
 fi
 
-if ! grep -q "MySakila Drive" code/db/sakila.sql; then
+if ! grep -q "MySakila Drive" code/var/db/sakila.sql; then
       success "Passed: Original value removed: MySakila Drive"
     else
       error "Failed: couldn't remove original value: MySakila Drive"
 fi
 
-if grep -q "INSERT IGNORE INTO" code/db/sakila.sql; then
+if grep -q "INSERT IGNORE INTO" code/var/db/sakila.sql; then
       success "Passed: Replacement value found: INSERT IGNORE INTO"
     else
       error "Failed: couldn't find original value: INSERT IGNORE INTO"
 fi
 
-if grep -q "My Sakila Drive" code/db/sakila.sql; then
+if grep -q "My Sakila Drive" code/var/db/sakila.sql; then
       success "Passed: Replacement value found: My Sakila Drive"
     else
       error "Failed: couldn't find original value: My Sakila Drive"

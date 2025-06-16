@@ -1,5 +1,5 @@
 .idea
-code/profiles/*
-code/db/*
+code/var/profiles/*
+code/var/db/*
 code/vendor
-!*/*/.gitkeep
+!*/var/*/.gitkeep

@@ -1,7 +1,5 @@
 FROM mariadb:10.6
 
-ARG PHP_VERSION
-
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 

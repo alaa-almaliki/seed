@@ -13,7 +13,7 @@ use Seed\Actions\Profiles\Scan;
 
 class Profile
 {
-    public static string $profileDir = __DIR__ . '/../profiles/';
+    public static string $profileDir = __DIR__ . '/../var/profiles/';
     public static array $profile;
 
     public static function getAction(string $action): Action
@@ -51,7 +51,7 @@ class Profile
             return false;
         }
         if (mkdir($profile) && is_dir($profile)) {
-            return copy(__DIR__ . '/../stubs/env.php', $profile . '/env.php');
+            return copy(__DIR__ . '/../var/stubs/env.php', $profile . '/env.php');
         }
 
         return false;

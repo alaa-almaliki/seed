@@ -5,7 +5,7 @@ set -e
 path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 source "$path"/bin/test-utils
 
-profile="$path"/code/profiles/www.seed.test
+profile="$path"/code/var/profiles/www.seed.test
 
 
 echo -e "Testing seed..."

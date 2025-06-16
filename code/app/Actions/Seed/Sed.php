@@ -14,7 +14,7 @@ class Sed implements Action
 {
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $sqlFile = SEED_ROOT . '/db/' . basename($input->getArgument('file'));
+        $sqlFile = SEED_ROOT . '/var/db/' . basename($input->getArgument('file'));
         $expressions =  Profile::load($input->getOption('profile'), 'sed');
         if (!empty($expressions)) {
             $command = PHP_OS === 'Darwin' ? "sed -i ''" : "sed -i";

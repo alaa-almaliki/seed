@@ -6,7 +6,7 @@ path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 if [ -f "$1" ]; then
     file=$(realpath "$1")
     file_basename=$(basename "$file")
-    destination="$path/code/db/$file_basename"
+    destination="$path/code/var/db/$file_basename"
 fi
 
 # exit if sql file is not provided
