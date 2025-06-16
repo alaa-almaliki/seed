@@ -14,7 +14,7 @@ RUN apt-get install -y software-properties-common \
     zip \
     unzip
 
-RUN apt-get update && apt-get install -y php-cli \
+RUN apt-get install -y php-cli \
     php-mysql
 
 ########### Install Composer #################
