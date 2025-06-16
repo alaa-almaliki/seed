@@ -17,7 +17,7 @@ The command above will do the following:
     - Delete data
     - Truncate tables
     - Drop Tables
-- Runs `mysqldump` command as the final step given you a new SQL dump file inside
+- Runs `mysqldump` command as the final step resulting a new SQL dump file inside
   `code/db/seed-{database_name}-{timestamp}.sql`
 - If the option `--delete-file` was provided, it will delete the copied SQL file `code/var/db/file_name.sql`
 
@@ -32,18 +32,18 @@ The command above will do the following:
 
 ## How it works
 
-## 1. Configuration
-- Defaults are set in `.env` file
-- MariaDB is the only available option currently `SQL_SERVER=mariadb`
-- Versions (10.4, 10.6 and 10.11) are available currently `MARIADB_VERSION=10.11`
-
-### 2. Setup `seed`
+### 1. Setup `seed`
 
 - Clone the repo `git@github.com:alaa-almaliki/seed.git`
 - Go into seed folder - `cd seed`
 - Build the container `bin/seed build`
 - Run composer `bin/seed composer install`
 - Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere `seed profiles create www.example.com`
+
+## 2. Configuration
+- Defaults are set in `.env` file
+- MariaDB is the only available option currently `SQL_SERVER=mariadb`
+- Versions (10.4, 10.6 and 10.11) are available currently `MARIADB_VERSION=10.11`
 
 ### 3. Setup profiles
 
