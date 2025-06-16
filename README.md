@@ -24,6 +24,10 @@ The command above will do the following:
 > [!NOTE]
 > seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are problems.
 
+**Testing**
+
+`bin/seed test`
+
 ## How it works
 
 ### 1. Setup `seed`
@@ -70,24 +74,23 @@ The command `bin/seed profiles` has the following:
 
 ## Command glossary
 
-| Command                                                                      | Summary                                                                                                                                                                                        |
-|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `bin/seed set:path`                                                          | Sets the bin path in .zshrc, so you can use **seed** from anywhere in the terminal. Then you can do like `seed build --no-cache`                                                               |
-| `bin/seed build [--no-cache]`                                                | Builds the container, optionally with arguments                                                                                                                                                |
-| `bin/seed rebuild`                                                           | Rebuilds the container from scratch                                                                                                                                                            |
-| `bin/seed up`                                                                | Starts the container                                                                                                                                                                           |
-| `bin/seed stop`                                                              | Stops the container                                                                                                                                                                            |
-| `bin/seed restart`                                                           | Restarts the container                                                                                                                                                                         |
-| `bin/seed destroy`                                                           | Destroys the container                                                                                                                                                                         |
-| `bin/seed chown`                                                             | Fixes filesystem ownership                                                                                                                                                                     |
-| `bin/seed ssh`                                                               | Access into the container                                                                                                                                                                      |
-| `bin/seed mysql`                                                             | Access mysql interactive shell                                                                                                                                                                 |
-| `bin/seed host:mysql`                                                        | Allow you to access the database from any MySQL client through container private network using host 0.0.0.0, port:3307 user:root and password:root. See `CONTAINER_IP` variable in `.env` file |
-| `bin/seed composer {install}`                                                | Runs composer inside the container                                                                                                                                                             |
-| `bin/seed profiles`                                                          | Runs profiles actions as create, delete, copy and list                                                                                                                                         |
-| `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                                                           |
-| `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                                                           |
-| `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided                                          |
+| Command                                                                      | Summary                                                                                                                                               |
+|------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `bin/seed set:path`                                                          | Sets the bin path in .zshrc, so you can use **seed** from anywhere in the terminal. Then you can do like `seed build --no-cache`                      |
+| `bin/seed build [--no-cache]`                                                | Builds the container, optionally with arguments                                                                                                       |
+| `bin/seed rebuild`                                                           | Rebuilds the container from scratch, it will remove the volume which will cause loss in data                                                          |
+| `bin/seed up`                                                                | Starts the container                                                                                                                                  |
+| `bin/seed stop`                                                              | Stops the container                                                                                                                                   |
+| `bin/seed restart`                                                           | Restarts the container                                                                                                                                |
+| `bin/seed destroy`                                                           | Destroys the container                                                                                                                                |
+| `bin/seed chown`                                                             | Fixes filesystem ownership                                                                                                                            |
+| `bin/seed ssh`                                                               | Access into the container                                                                                                                             |
+| `bin/seed mysql`                                                             | Access mysql interactive shell                                                                                                                        |
+| `bin/seed composer {install}`                                                | Runs composer inside the container                                                                                                                    |
+| `bin/seed profiles`                                                          | Runs profiles actions as create, delete, copy and list                                                                                                |
+| `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  |
+| `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  |
+| `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
 
 ## Contributions
 All contributions are welcome.
