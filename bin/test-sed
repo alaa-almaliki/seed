@@ -6,11 +6,6 @@ set -e
 echo -e "Testing Sed"
 
 #Before sed
-if grep -q "enable the sandbox mode" code/db/sakila.sql; then
-      success "Passed: Original value found: enable the sandbox mode"
-    else
-      error "Failed: couldn't find original value: enable the sandbox mode"
-fi
 
 if grep -q "DEFINER=" code/db/sakila.sql; then
       success "Passed: Original value found: DEFINER="
@@ -32,13 +27,6 @@ fi
 
 "$path"/bin/exec php seed sed sakila.sql --profile www.seed.test --quiet
 
-
-# After sed
-if ! grep -q "enable the sandbox mode" code/db/sakila.sql; then
-      success "Passed: Original value removed: enable the sandbox mode"
-    else
-      error "Failed: couldn't remove original value: enable the sandbox mode"
-fi
 
 if ! grep -q "DEFINER=" code/db/sakila.sql; then
       success "Passed: Original value remove: DEFINER="

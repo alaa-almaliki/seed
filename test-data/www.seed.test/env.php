@@ -37,7 +37,6 @@ return [
         # Execute find and replace see sample file                    #
         #=============================================================#
 
-        '1d',
         "s,DEFINER=[^*]*\*,\*,g",
         "s,CREATE DEFINER=\`root\`@\`localhost\` FUNCTION,CREATE FUNCTION,g",
         "s,CREATE DEFINER=\`root\`@\`localhost\` PROCEDURE,CREATE PROCEDURE,g",
