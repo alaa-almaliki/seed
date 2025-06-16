@@ -18,13 +18,17 @@ class Profile
 
     public static function getAction(string $action): Action
     {
-        return match ($action) {
+        $actions = [
             'list' => new Scan(),
             'create' => new Create(),
             'copy' => new Copy(),
             'delete' => new Delete(),
-            default => throw new InvalidArgumentException('Invalid action'),
-        };
+        ];
+
+        if (isset($actions[$action])) {
+            return $actions[$action];
+        }
+        throw new InvalidArgumentException('Invalid action');
     }
 
     public static function load(string $name, ?string $section = null): array

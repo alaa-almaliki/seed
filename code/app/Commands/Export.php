@@ -19,7 +19,7 @@ class Export extends Command
     protected function configure(): void
     {
         parent::configure();
-        $this->addOption('profile', mode: InputOption::VALUE_REQUIRED, description: 'Profile name to use');
+        $this->addOption('profile', null, InputOption::VALUE_REQUIRED, 'Profile name to use');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

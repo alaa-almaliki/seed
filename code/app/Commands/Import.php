@@ -21,8 +21,8 @@ class Import extends Command
     {
         parent::configure();
         $this->addArgument('file', InputArgument::REQUIRED, 'Database File need to run seed against');
-        $this->addOption('profile', mode: InputOption::VALUE_REQUIRED, description: 'Profile name to use');
-        $this->addOption('delete-file', mode: InputOption::VALUE_OPTIONAL, description: 'Option to delete the file after seeding');
+        $this->addOption('profile', null, InputOption::VALUE_REQUIRED, 'Profile name to use');
+        $this->addOption('delete-file', null, InputOption::VALUE_OPTIONAL, 'Option to delete the file after seeding');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

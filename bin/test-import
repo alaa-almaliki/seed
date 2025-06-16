@@ -5,7 +5,7 @@ set -e
 echo -e "Testing Import"
 "$path"/bin/exec php seed import sakila.sql --profile www.seed.test --quiet
 
-val=$("$path"/bin/exec mysql -uroot -e "show databases" | grep sakila)
+val=$("$path"/bin/exec mysql -uroot -proot -e "show databases" | grep sakila)
 
 if [ "$val" == "sakila" ]; then
       success "Passed: databases sakila imported successfully"

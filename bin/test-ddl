@@ -6,7 +6,7 @@ set -e
 echo -e "Testing ddl"
 
 #Before update row
-first_name=$("$path"/bin/exec mysql -uroot -e "select sakila.customer.first_name from sakila.customer where sakila.customer.customer_id = 1" | grep "MARY")
+first_name=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.customer.first_name from sakila.customer where sakila.customer.customer_id = 1" | grep "MARY")
 if [ "$first_name" == "MARY" ]; then
      success "Passed: Customer first name MARY exists in customer table, row id 1"
     else
@@ -14,7 +14,7 @@ if [ "$first_name" == "MARY" ]; then
 fi
 
 #Before delete row
-rental_id=$("$path"/bin/exec mysql -uroot -e "select sakila.rental.rental_id from sakila.rental where sakila.rental.rental_id = 1" | grep "[0-1]")
+rental_id=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.rental.rental_id from sakila.rental where sakila.rental.rental_id = 1" | grep "[0-1]")
 if [ "$rental_id" == 1 ]; then
      success "Passed: rental with rental_id 1 exists in rental table"
     else
@@ -22,7 +22,7 @@ if [ "$rental_id" == 1 ]; then
 fi
 
 #Before truncate table
-count=$("$path"/bin/exec mysql -uroot -e "select film_id from sakila.film_text limit 1" | grep "[0-1]")
+count=$("$path"/bin/exec mysql -uroot -proot -e "select film_id from sakila.film_text limit 1" | grep "[0-1]")
 if [ "$count" -gt 0 ]; then
      success "Passed: table film_text has records in sakila database"
     else
@@ -30,7 +30,7 @@ if [ "$count" -gt 0 ]; then
 fi
 
 #Before drop table
-table=$("$path"/bin/exec mysql -uroot -e "use sakila; show tables" | grep "language")
+table=$("$path"/bin/exec mysql -uroot -proot -e "use sakila; show tables" | grep "language")
 if [ "$table" == "language" ]; then
      success "Passed: table language exists in sakila database"
     else
@@ -40,7 +40,7 @@ fi
 "$path"/bin/exec php seed ddl sakila.sql --profile www.seed.test --quiet
 
 #Insert row
-address_id=$("$path"/bin/exec mysql -uroot -e "select sakila.address.address_id from sakila.address where sakila.address.address = '47 MySeed Drive'" | grep "[0-9]")
+address_id=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.address.address_id from sakila.address where sakila.address.address = '47 MySeed Drive'" | grep "[0-9]")
 if [ "$address_id" == 606 ]; then
       success "Passed: Address with id $address_id inserted successfully"
     else
@@ -48,7 +48,7 @@ if [ "$address_id" == 606 ]; then
 fi
 
 #After update row
-first_name=$("$path"/bin/exec mysql -uroot -e "select sakila.customer.first_name from sakila.customer where sakila.customer.customer_id = 1" | grep "Seed")
+first_name=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.customer.first_name from sakila.customer where sakila.customer.customer_id = 1" | grep "Seed")
 if [ "$first_name" == "Seed" ]; then
      success "Passed: Customer first name Seed updated in customer table, row id 1"
     else
@@ -56,7 +56,7 @@ if [ "$first_name" == "Seed" ]; then
 fi
 
 #After delete row
-rental_id=$("$path"/bin/exec mysql -uroot -e "select sakila.rental.rental_id from sakila.rental where sakila.rental.rental_id = 1")
+rental_id=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.rental.rental_id from sakila.rental where sakila.rental.rental_id = 1")
 if [ -z "$rental_id" ]; then
      success "Passed: rental with rental_id 1 deleted successfully from rental table"
     else
@@ -64,7 +64,7 @@ if [ -z "$rental_id" ]; then
 fi
 
 #After truncate table
-count=$("$path"/bin/exec mysql -uroot -e "select film_id from sakila.film_text limit 1")
+count=$("$path"/bin/exec mysql -uroot -proot -e "select film_id from sakila.film_text limit 1")
 if [ -z "$count" ]; then
      success "Passed: table film_text truncated in sakila database"
     else
@@ -72,7 +72,7 @@ if [ -z "$count" ]; then
 fi
 
 #Before drop table
-table=$("$path"/bin/exec mysql -uroot -e "select table_name from information_schema.tables where table_schema = 'sakila' and table_name = 'language'")
+table=$("$path"/bin/exec mysql -uroot -proot -e "select table_name from information_schema.tables where table_schema = 'sakila' and table_name = 'language'")
 if [ "$table" != "language" ]; then
      success "Passed: table language deleted successfully from sakila database"
     else

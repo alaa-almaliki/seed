@@ -6,12 +6,17 @@ namespace Seed;
 
 use Laminas\Db\Adapter\Driver\ConnectionInterface;
 
-readonly class Transaction
+class Transaction
 {
+    private ConnectionInterface $connection;
+    private bool $transactional;
+
     public function __construct(
-        private ConnectionInterface $connection,
-        private bool $transactional
-    ){
+        ConnectionInterface $connection,
+        bool                $transactional
+    ) {
+        $this->connection = $connection;
+        $this->transactional = $transactional;
     }
 
     public function begin(): void

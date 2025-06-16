@@ -1,13 +1,11 @@
 services:
   seed:
     build:
-      context: .workspace/mariadb/${MARIADB_VERSION}
+      context: .workspace/php-cli/${PHP_VERSION}
       dockerfile: Dockerfile
     tty: true
     env_file:
       - ./.env
-    environment:
-      MARIADB_ROOT_PASSWORD: root
     working_dir: /var/www/html
     volumes:
       - ./code:/var/www/html

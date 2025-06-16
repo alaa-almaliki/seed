@@ -18,7 +18,7 @@ class Import implements Action
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
         $deleteFile = $input->getParameterOption('--delete-file');
 
-        $command = 'mysql -uroot';
+        $command = 'mysql -uroot -proot';
 
         $output->writeln('Creating database ' . $mysql['database']);
         $this->createDatabase($command, $mysql);

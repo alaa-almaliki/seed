@@ -22,9 +22,9 @@ class Profiles extends Command
     {
         parent::configure();
         $this->addArgument('action', InputArgument::REQUIRED, 'Profile Action[create|copy|delete|list]');
-        $this->addOption('name', mode:InputOption::VALUE_OPTIONAL);
-        $this->addOption('source', mode:InputOption::VALUE_OPTIONAL);
-        $this->addOption('target', mode:InputOption::VALUE_OPTIONAL);
+        $this->addOption('name', null, InputOption::VALUE_OPTIONAL);
+        $this->addOption('source', null, InputOption::VALUE_OPTIONAL);
+        $this->addOption('target', null, InputOption::VALUE_OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -27,7 +27,7 @@ class DbAdapter
 
     public function execute(callable $fn, bool $transactional = true): void
     {
-        $transaction = new Transaction($this->getDbAdapter()->getDriver()?->getConnection(), $transactional);
+        $transaction = new Transaction($this->getDbAdapter()->getDriver()->getConnection(), $transactional);
         try {
             $transaction->begin();
             $this->start();
@@ -40,7 +40,7 @@ class DbAdapter
         }
     }
 
-    public function config(array $config): static
+    public function config(array $config): self
     {
         $this->config = $config;
         return $this;
