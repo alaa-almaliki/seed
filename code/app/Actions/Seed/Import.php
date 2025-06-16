@@ -16,7 +16,7 @@ class Import implements Action
     {
         $sqlFile = SEED_ROOT . '/db/' . basename($input->getArgument('file'));
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
-        $deleteFile = $input->getParameterOption('--delete-file');
+        $deleteFile = $input->getOption('delete-file');
 
         $command = 'mysql -uroot -proot';
 
@@ -29,8 +29,9 @@ class Import implements Action
         $output->writeln(sprintf('importing database %s from %s', $mysql['database'], $sqlFile));
         $this->importDatabase($command, $mysql, $sqlFile);
 
-        if ($deleteFile !== null) {
-            //unlink($sqlFile);
+        var_dump($deleteFile);
+        if ($deleteFile) {
+            unlink($sqlFile);
         }
 
         return Command::SUCCESS;
