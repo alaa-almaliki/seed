@@ -1,7 +1,7 @@
 services:
   seed:
     build:
-      context: .workspace/mariadb/${MARIADB_VERSION}
+      context: .workspace/${SQL_SERVER}/${MARIADB_VERSION}
       dockerfile: Dockerfile
     tty: true
     env_file:
