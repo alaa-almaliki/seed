@@ -7,8 +7,8 @@ Command `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
 
 The command above will do the following:
 
-- Copies the file `path/to/file_name.sql` to `code/db/file_name.sql`
-- Reads the configurations in `profiles/www.example.com/env.php` to set up tasks
+- Copies the file `path/to/file_name.sql` to `code/var/db/file_name.sql`
+- Reads the configurations in `code/var/profiles/www.example.com/env.php` to set up tasks
 - Performs find and replace using sed commands on the SQL file.
 - Imports The SQL file into MySQL inside the container.
 - Runs DDL commands
@@ -19,7 +19,7 @@ The command above will do the following:
     - Drop Tables
 - Runs `mysqldump` command as the final step given you a new SQL dump file inside
   `code/db/seed-{database_name}-{timestamp}.sql`
-- If the option `--delete-file` was provided, it will delete the copied SQL file `code/db/file_name.sql`
+- If the option `--delete-file` was provided, it will delete the copied SQL file `code/var/db/file_name.sql`
 
 **Testing**
 
@@ -30,20 +30,25 @@ The command above will do the following:
 
 ## How it works
 
-### 1. Setup `seed`
+## 1. Configuration
+- Defaults are set in `.env` file
+- MariaDB is the only available option currently `SQL_SERVER=mariadb`
+- Versions (10.4, 10.6 and 10.11) are available currently `MARIADB_VERSION=10.11`
+
+### 2. Setup `seed`
 
 - Clone the repo `git@github.com:alaa-almaliki/seed.git`
 - Go into seed folder - `cd seed`
 - Build the container `bin/seed build`
 - Run composer `bin/seed composer install`
-- Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere
+- Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere `seed profiles create www.example.com`
 
-### 2. Setup profiles
+### 3. Setup profiles
 
 After building the **seed** container, you can do the following:
 
 - Run `bin/seed profiles create www.example.com`
-- This will create `code/profiles/www.example.com/env.php` file
+- This will create `codevar//profiles/www.example.com/env.php` file
 - Configure `env.php` file as you wish
     - Section `mysql` is the MySQL database credentials and options you wish to create inside the **seed** container
     - Section `mysqldump` will be the settings related the database export in the final step
@@ -55,13 +60,13 @@ After building the **seed** container, you can do the following:
         - `truncate` will truncate tables
         - `drop` will drop tables
 
-### 3. Running `seed`
+### 4. Running `seed`
 
 After setting up profiles, you can run **seed** as follows:
 
 - Run `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
 - Wait for the script to finish
-- Once done, the file `code/db/seed-{database_name}-{timestamp}.sql` will be available for you to use
+- Once done, the file `code/var/db/seed-{database_name}-{timestamp}.sql` will be available for you to use
 
 ## Profiles
 
