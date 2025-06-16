@@ -2,7 +2,7 @@
 set -e
 
 #Test create profile
-echo -e "Testing profiles"
+echo -e "[$(date '+%F %T')] Testing profiles"
 
 if [ ! -d "$profile" ]; then
   success "Passed: profile www.seed.test does not exist yet"

@@ -2,7 +2,7 @@
 set -e
 
 #Test import
-echo -e "Testing Import"
+echo -e "[$(date '+%F %T')] Testing Import"
 "$path"/bin/exec php seed import sakila.sql --profile www.seed.test --quiet
 
 val=$("$path"/bin/exec mysql -uroot -proot -e "show databases" | grep sakila)

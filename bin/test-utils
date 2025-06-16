@@ -8,9 +8,9 @@ NC='\033[0m'
 check="\xE2\x9C\x94"
 
 success() {
-  echo -e "${GREEN}""${check}" "$1""${NC}"
+  echo -e "[$(date '+%F %T')] ${GREEN}""${check}" "$1""${NC}"
 }
 
 error() {
-  echo -e "${RED}""x $1""${NC}"
+  echo -e "[$(date '+%F %T')] ${RED}""x $1""${NC}"
 }

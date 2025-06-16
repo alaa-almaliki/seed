@@ -2,7 +2,7 @@
 set -e
 
 #Test copy dump file
-echo -e "Testing copying dump file"
+echo -e "[$(date '+%F %T')] Testing copying dump file"
 
 #Before copying
 if [ ! -f "$path"/var/code/db/sakila.sql ]; then

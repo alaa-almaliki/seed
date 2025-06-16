@@ -3,7 +3,7 @@ set -e
 
 
 #Test ddl
-echo -e "Testing ddl"
+echo -e "[$(date '+%F %T')] Testing ddl"
 
 #Before update row
 first_name=$("$path"/bin/exec mysql -uroot -proot -e "select sakila.customer.first_name from sakila.customer where sakila.customer.customer_id = 1" | grep "MARY")

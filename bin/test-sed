@@ -3,7 +3,7 @@ set -e
 
 #Test sed
 
-echo -e "Testing Sed"
+echo -e "[$(date '+%F %T')] Testing Sed"
 
 #Before sed
 

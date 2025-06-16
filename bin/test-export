@@ -2,7 +2,7 @@
 set -e
 
 #Test export
-echo -e "Testing export"
+echo -e "[$(date '+%F %T')] Testing export"
 
 
 if ! find code/var/db/sakila-seed*.sql -quit &> /dev/null; then
