@@ -1,6 +1,6 @@
 # seed
 
-**seed** automates the tasks that are done repeatedly and frequently to remove production and test server variables from
+**seed** automates the database tasks that are done repeatedly and frequently to remove production and test server variables from
 SQL dump files and replaces them with local environment variables.
 
 Command `bin/seed path/to/file_name.sql --profile www.example.com --delete-file`
@@ -10,7 +10,7 @@ The command above will do the following:
 - Copies the file `path/to/file_name.sql` to `code/var/db/file_name.sql`
 - Reads the configurations in `code/var/profiles/www.example.com/env.php` to set up tasks
 - Performs find and replace using sed commands on the SQL file.
-- Imports The SQL file into MySQL inside the container.
+- Imports The SQL file into the **seed** container.
 - Runs DDL commands
     - Insert new data
     - Update existing data
@@ -21,7 +21,7 @@ The command above will do the following:
   `code/db/seed-{database_name}-{timestamp}.sql`
 - If the option `--delete-file` was provided, it will delete the copied SQL file `code/var/db/file_name.sql`
 
-**Testing**
+##### Testing
 
 - `bin/seed build`
 - `bin/seed composer install`
