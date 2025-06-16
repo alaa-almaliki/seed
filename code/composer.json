@@ -17,7 +17,6 @@
   ],
   "require": {
     "symfony/console": "*",
-    "symfony/finder": "*",
     "laminas/laminas-db": "*"
   },
   "autoload": {

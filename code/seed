@@ -3,13 +3,12 @@
 
 declare(strict_types=1);
 
-//set_time_limit(0);
-//
-//ini_set('memory_limit', '-1');
-//
-//ini_set('display_errors', '1');
-//ini_set('display_startup_errors', '1');
-//ini_set('error_reporting', E_ALL);
+set_time_limit(0);
+
+ini_set('memory_limit', '-1');
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 const SEED_ROOT = __DIR__;
 
@@ -21,10 +20,6 @@ use Seed\Commands\Import;
 use Seed\Commands\Profiles;
 use Seed\Commands\Sed;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Finder\Finder;
-
-$finder = new Finder();
-$finder->in('./');
 
 
 $application = new Application();

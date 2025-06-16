@@ -63,17 +63,7 @@ fi
 
 # Access mysql
 if [ "$1" = 'mysql' ]; then
-    "$path"/bin/exec "$@"
-    exit 0
-fi
-
-# Add root to container ip
-if [ "$1" = 'host:mysql' ]; then
-    "$path"/bin/exec mysql -e "GRANT USAGE ON *.* to root@${CONTAINER_IP} IDENTIFIED BY 'root';"
-    sleep 1
-    "$path"/bin/exec mysql -e "GRANT ALL PRIVILEGES ON *.* TO root@${CONTAINER_IP} WITH GRANT OPTION;"
-    sleep 1
-    "$path"/bin/exec mysql -e "FLUSH PRIVILEGES;"
+    "$path"/bin/exec mysql -uroot -proot
     exit 0
 fi
 
