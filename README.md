@@ -23,7 +23,9 @@ The command above will do the following:
 
 **Testing**
 
-`bin/seed test`
+- `bin/seed build`
+- `bin/seed composer install`
+- `bin/seed test`
 
 > [!NOTE]
 > seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are problems.
