@@ -89,8 +89,11 @@ The command `bin/seed profiles` has the following:
 
 | Command                                                                      | Summary                                                                                                                                               |
 |------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `bin/seed set:path`                                                          | Sets the bin path in .zshrc, so you can use **seed** from anywhere in the terminal. Then you can do like `seed build --no-cache`                      |
+| `bin/seed profiles action [create,copy,delete,list]`                         | Runs profiles actions as create, delete, copy and list                                                                                                |
+| `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
+| `bin/seed test`                                                              | Runs tests                                                                                                                                            |
 | `bin/seed build [--no-cache]`                                                | Builds the container, optionally with arguments                                                                                                       |
+| `bin/seed composer {install}`                                                | Runs composer inside the container                                                                                                                    |
 | `bin/seed rebuild`                                                           | Rebuilds the container from scratch, it will remove the volume which will cause loss in data                                                          |
 | `bin/seed up`                                                                | Starts the container                                                                                                                                  |
 | `bin/seed stop`                                                              | Stops the container                                                                                                                                   |
@@ -99,12 +102,9 @@ The command `bin/seed profiles` has the following:
 | `bin/seed chown`                                                             | Fixes filesystem ownership                                                                                                                            |
 | `bin/seed ssh`                                                               | Access into the container                                                                                                                             |
 | `bin/seed mysql`                                                             | Access mysql interactive shell                                                                                                                        |
-| `bin/seed composer {install}`                                                | Runs composer inside the container                                                                                                                    |
-| `bin/seed profiles`                                                          | Runs profiles actions as create, delete, copy and list                                                                                                |
 | `bin/seed copy_to_container {folder_name}`                                   | Copy Filesystem from host **./code/** to container **/var/www/html**                                                                                  |
 | `bin/seed copy_from_container {folder_name}`                                 | Copy Filesystem from container **/var/www/html** to host **./code/**                                                                                  |
-| `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
-| `bin/seed test`                                                              | Runs tests                                                                                                                                            |
+| `bin/seed set:path`                                                          | Sets the bin path in .zshrc, so you can use **seed** from anywhere in the terminal. Then you can do like `seed build --no-cache`                      |
 
 ## Contributions
 
