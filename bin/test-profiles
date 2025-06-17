@@ -26,7 +26,7 @@ else
 fi
 
 rm -rf  "$profile"/env.php
-/bin/cp "$path"/test-data/www.seed.test/env.php "$profile"
+/bin/cp "$path"/code/var/test-data/www.seed.test/env.php "$profile"
 
 #Test copy profile
 "$path"/bin/seed profiles copy --source www.seed.test --target www.seed.test-copy --quiet

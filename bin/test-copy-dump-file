@@ -11,7 +11,7 @@ else
     error "Failed: SQL dump file sakila.sql already exists"
 fi
 
-"$path"/bin/copy-dump-file "$path"/test-data/db/sakila.sql >/dev/null
+"$path"/bin/copy-dump-file "$path"/code/var/test-data/db/sakila.sql >/dev/null
 
 #After copying
 if [ -f "$path"/code/var/db/sakila.sql ]; then

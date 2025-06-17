@@ -1,5 +1,5 @@
 .idea
-code/var/profiles/*
-code/var/db/*
+code/var
 code/vendor
 !*/var/*/.gitkeep
+!*/var/test-data
