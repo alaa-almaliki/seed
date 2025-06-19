@@ -19,7 +19,7 @@ The command above will do the following:
     - Truncate tables
     - Drop Tables
 - Runs `mysqldump` command as the final step resulting a new SQL dump file inside
-  `code/db/seed-{database_name}-{timestamp}.sql`
+  `code/var/db/seed-{database_name}-{timestamp}.sql`
 - If the option `--delete-file` was provided, it will delete the copied SQL file `code/var/db/file_name.sql`
 
 ##### Testing
