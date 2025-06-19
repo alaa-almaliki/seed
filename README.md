@@ -81,7 +81,7 @@ After setting up profiles, you can run **seed** as follows:
 The command `bin/seed profiles` has the following:
 
 - `bin/seed profiles create --name [profile-name]` will create a profile with a given name
-- `bin/seed profiles delete [--name profile-name]` will delete a profile
+- `bin/seed profiles delete --name [profile-name]` will delete a profile
 - `bin/seed profiles copy --source [profile-name-1] --target [profile-name-2]` will duplicate/copy a profile
 - `bin/seed profiles list` will list profiles
 
