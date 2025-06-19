@@ -55,7 +55,7 @@ The command above will do the following:
 
 After building the **seed** container, you can do the following:
 
-- Run `bin/seed profiles create www.example.com`
+- Run `bin/seed profiles create --name www.example.com`
 - This will create `code/var/profiles/www.example.com/env.php` file
 - Configure `env.php` file as you wish
     - Section `mysql` is the MySQL database credentials and options you wish to create inside the **seed** container
@@ -80,9 +80,9 @@ After setting up profiles, you can run **seed** as follows:
 
 The command `bin/seed profiles` has the following:
 
-- `bin/seed profiles create [profile-name]` will create a profile with a given name
-- `bin/seed profiles delete [profile-name]` will delete a profile
-- `bin/seed profiles copy [profile-name-1] [profile-name-2]` will duplicate/copy a profile
+- `bin/seed profiles create --name [profile-name]` will create a profile with a given name
+- `bin/seed profiles delete [--name profile-name]` will delete a profile
+- `bin/seed profiles copy --source [profile-name-1] --target [profile-name-2]` will duplicate/copy a profile
 - `bin/seed profiles list` will list profiles
 
 ## Command glossary
