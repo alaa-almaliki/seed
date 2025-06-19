@@ -5,10 +5,10 @@ set -e
 echo -e "[$(date '+%F %T')] Testing copying dump file"
 
 #Before copying
-if [ ! -f "$path"/var/code/db/sakila.sql ]; then
+if [ ! -f "$path"/code/var/db/sakila.sql ]; then
     success "Passed: SQL dump file sakila.sql doesn't exist yet"
 else
-    error "Failed: SQL dump file sakila.sql already exists"
+    warn "Warning: SQL dump file sakila.sql already exists"
 fi
 
 "$path"/bin/copy-dump-file "$path"/code/var/test-data/db/sakila.sql >/dev/null

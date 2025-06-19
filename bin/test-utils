@@ -3,6 +3,7 @@ set -e
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+Orange='\033[0;33m'
 NC='\033[0m'
 
 check="\xE2\x9C\x94"
@@ -13,4 +14,8 @@ success() {
 
 error() {
   echo -e "[$(date '+%F %T')] ${RED}""x $1""${NC}"
+}
+
+warn() {
+  echo -e "[$(date '+%F %T')] ${Orange}""! $1""${NC}"
 }
