@@ -2,6 +2,7 @@
 
 set -e
 
+start=$(date +'%s')
 path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 source "$path"/.env
 source "$path"/bin/helpers
@@ -16,3 +17,5 @@ source "$path"/bin/profiles
 "$path"/bin/exec php seed ddl "$1" --profile "$3"
 
 "$path"/bin/exec php seed export --profile "$3"
+
+echo -e "executed in $(($(date +'%s') - $start)) seconds"

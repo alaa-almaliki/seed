@@ -7,7 +7,7 @@ source "$path"/bin/test-utils
 
 profile="$path"/code/var/profiles/www.seed.test
 
-
+start=$(date +'%s')
 echo -e "[$(date '+%F %T')] Testing seed..."
 
 source "$path"/bin/test-profiles
@@ -18,5 +18,6 @@ source "$path"/bin/test-ddl
 source "$path"/bin/test-export
 source "$path"/bin/test-cleanup
 
-echo -e "[$(date '+%F %T')] Testing done"
+
+echo -e "[$(date '+%F %T')] Testing done in $(($(date +'%s') - $start)) seconds"
 

@@ -34,4 +34,4 @@ $application->addCommands(
     ]
 );
 
-$application->run();
+$application->run(null, new \Seed\OutputDecorator());

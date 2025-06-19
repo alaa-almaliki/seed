@@ -29,7 +29,7 @@ The command above will do the following:
 - `bin/seed test`
 
 > [!NOTE]
-> seed used and tested on **macOS** only. You are free to try it in windows or linux and contribute if there are
+> seed used and tested on **macOS** only. You are free to try it on windows or linux and contribute if there are
 > problems.
 
 ## How it works
