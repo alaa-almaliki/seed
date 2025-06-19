@@ -41,7 +41,7 @@ The command above will do the following:
 - Build the container `bin/seed build`
 - Run composer `bin/seed composer install`
 - Optionally set the path of seed script `bin/seed set:path` so you can access the script from anywhere
-  `seed profiles create www.example.com`
+  `seed profiles create --name www.example.com`
 
 ## 2. Configuration
 
