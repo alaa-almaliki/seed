@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Seed\Actions\Seed;
 
 use Seed\Actions\Action;
+use Seed\Exec;
 use Seed\Profile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,16 +25,20 @@ class Export implements Action
             }
         }
 
+        $output->writeln('Creating dump file');
         $command = sprintf(
-            'mysqldump %s -uroot -proot %s %s > %s',
-            implode(' ', $mysqlDump['options']),
+            '%s %s > %s',
             $ignoreTables,
             $mysql['database'],
             $outputFile = $this->createOutputFile($mysql['database'])
         );
 
-        $output->writeln('Creating dump file');
-        exec($command);
+        Exec::create()
+            ->setPrefix('mysqldump ' . implode(' ', $mysqlDump['options']) . ' -uroot -proot ')
+            ->setCommand($command)
+            ->setQuoteCommand(false)
+            ->execute();
+
         $output->writeln('Dump file created at ' . $outputFile);
 
         return Command::SUCCESS;

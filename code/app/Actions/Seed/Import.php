@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Seed\Actions\Seed;
 
 use Seed\Actions\Action;
+use Seed\Exec;
 use Seed\Profile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,16 +19,16 @@ class Import implements Action
         $mysql =  Profile::load($input->getOption('profile'), 'mysql');
         $deleteFile = $input->getOption('delete-file');
 
-        $command = 'mysql -uroot -proot';
+        $exec = Exec::create()->setPrefix('mysql -uroot -proot');
 
         $output->writeln('Creating database ' . $mysql['database']);
-        $this->createDatabase($command, $mysql);
+        $this->createDatabase($exec, $mysql);
 
         $output->writeln('Creating user ' . $mysql['username']);
-        $this->createUser($command, $mysql);
+        $this->createUser($exec, $mysql);
 
         $output->writeln(sprintf('importing database %s from %s', $mysql['database'], $sqlFile));
-        $this->importDatabase($command, $mysql, $sqlFile);
+        $this->importDatabase($exec, $mysql, $sqlFile);
 
         if ($deleteFile) {
             unlink($sqlFile);
@@ -36,79 +37,75 @@ class Import implements Action
         return Command::SUCCESS;
     }
 
-    private function createUser(string $command, array $mysql): void
+    private function createUser(Exec $rawSqlCommand, array $mysql): void
     {
         $deleteUserStatement = sprintf(
-            '%s -e "DROP USER IF EXISTS \'%s\'@\'%s\';"',
-            $command,
+            'DROP USER IF EXISTS \'%s\'@\'%s\';',
             $mysql['username'],
             $mysql['hostname'],
         );
 
         $createUserStatement = sprintf(
-            '%s -e "CREATE USER \'%s\'@\'%s\' IDENTIFIED BY \'%s\';"',
-            $command,
+            'CREATE USER \'%s\'@\'%s\' IDENTIFIED BY \'%s\';',
             $mysql['username'],
             $mysql['hostname'],
             $mysql['password'],
         );
 
         $privileges = sprintf(
-            '%s -e "GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@\'%s\';"',
-            $command,
+            'GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@\'%s\';',
             $mysql['database'],
             $mysql['username'],
             $mysql['hostname'],
         );
-        
-        exec($deleteUserStatement);
-        exec($createUserStatement);
-        exec($privileges);
-        exec($command . ' -e "FLUSH PRIVILEGES;"');
+
+        $rawSqlCommand->setCommand($deleteUserStatement)->execute();
+        $rawSqlCommand->setCommand($createUserStatement)->execute();
+        $rawSqlCommand->setCommand($privileges)->execute();
+        $rawSqlCommand->setCommand('FLUSH PRIVILEGES;')->execute();
 
         if ($mysql['hostname'] !== 'localhost') {
             $localhostPrivileges = sprintf(
-                '%s -e "GRANT USAGE ON %s.* to \'%s\'@localhost" IDENTIFIED BY \'%s\';',
-                $command,
+                'GRANT USAGE ON %s.* to \'%s\'@localhost IDENTIFIED BY \'%s\';',
                 $mysql['database'],
                 $mysql['username'],
                 $mysql['password'],
             );
 
-            exec($localhostPrivileges);
+            $rawSqlCommand->setCommand($localhostPrivileges)->execute();
 
 
             $localhostPrivilegesWithOptions = sprintf(
-                '%s -e GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@localhost WITH GRANT OPTION;',
-                $command,
+                'GRANT ALL PRIVILEGES ON %s.* TO \'%s\'@localhost WITH GRANT OPTION;',
                 $mysql['database'],
                 $mysql['username'],
             );
-            exec($localhostPrivilegesWithOptions);
-            exec($command . ' -e "FLUSH PRIVILEGES;"');
+
+            $rawSqlCommand->setCommand($localhostPrivilegesWithOptions)->execute();
+            $rawSqlCommand->setCommand('FLUSH PRIVILEGES;')->execute();
         }
     }
 
-    private function createDatabase(string $command, array $mysql): void
+    private function createDatabase(Exec $exec, array $mysql): void
     {
-        $dropDatabaseStatement = sprintf('%s -e "DROP DATABASE IF EXISTS %s;"', $command, $mysql['database']);
+        $dropDatabaseStatement = sprintf('DROP DATABASE IF EXISTS %s;', $mysql['database']);
         $createDatabaseStatement = sprintf(
-            '%s -e "CREATE DATABASE %s CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"',
-            $command,
+            'CREATE DATABASE %s CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
             $mysql['database']
         );
 
-
-        exec($dropDatabaseStatement);
-        exec($command . ' -e "FLUSH PRIVILEGES;"');
-        exec($createDatabaseStatement);
-        exec($command . ' -e "FLUSH PRIVILEGES;"');
+        $exec->setCommand($dropDatabaseStatement)->execute();
+        $exec->setCommand('FLUSH PRIVILEGES;')->execute();
+        $exec->setCommand($createDatabaseStatement)->execute();
+        $exec->setCommand('FLUSH PRIVILEGES;')->execute();
     }
 
-    private function importDatabase(string $command, array $mysql, string $sqlFile): void
+    private function importDatabase(Exec $exec, array $mysql, string $sqlFile): void
     {
-        exec(sprintf('%s -e "use %s";', $command, $mysql['database']));
-        exec(sprintf('%s -e "SET SESSION SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\';"', $command));
-        exec(sprintf('%s -f %s < %s;', $command, $mysql['database'], $sqlFile));
+        $exec->setCommand('SET SESSION SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\';')->execute();
+        $exec->setFlag('-f')
+            ->setQuoteCommand(false)
+            ->setCommand($mysql['database'] . ' < ' . $sqlFile)
+            ->execute();
     }
 }
