@@ -25,19 +25,19 @@ class Ddl implements Action
         $output->writeln('Executing DDL...');
 
         $output->writeln('Executing insert statements');
-        Insert::execute($config, $ddl['insert']);
+        Insert::execute($config, $ddl['insert'], $output);
 
         $output->writeln('Executing update statements');
-        Update::execute($config, $ddl['update']);
+        Update::execute($config, $ddl['update'], $output);
 
         $output->writeln('Executing delete statements');
-        Delete::execute($config, $ddl['delete']);
+        Delete::execute($config, $ddl['delete'], $output);
 
         $output->writeln('Executing truncate statements');
-        Truncate::execute($config, $ddl['truncate']);
+        Truncate::execute($config, $ddl['truncate'], $output);
 
         $output->writeln('Executing drop statements');
-        Drop::execute($config, $ddl['drop']);
+        Drop::execute($config, $ddl['drop'], $output);
 
         return Command::SUCCESS;
     }
