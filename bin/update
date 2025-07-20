@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
+
+source "${path}"/bin/typography
+
+# Update seed
+if [ "$1" = 'update' ]; then
+  current_branch=$(git branch --show-current)
+  echo -e "${GREEN}Updating seed to the current branch ${NC}${BOLD}${current_branch}${NORMAL}"
+  git fetch origin "${current_branch}" 2>/dev/null
+  git pull origin "${current_branch}" 2>/dev/null
+  echo -e "${BOLD}${current_branch}${NORMAIL} ${GREEN}updated to the latest${NC}"
+  exit 0
+fi
+

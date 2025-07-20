@@ -1,15 +1,12 @@
 #!/bin/bash
 set -e
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-Orange='\033[0;33m'
-NC='\033[0m'
+path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 
-check="\xE2\x9C\x94"
+source "${path}"/bin/typography
 
 success() {
-  echo -e "[$(date '+%F %T')] ${GREEN}""${check}" "$1""${NC}"
+  echo -e "[$(date '+%F %T')] ${GREEN}""${CHECK}" "$1""${NC}"
 }
 
 error() {

@@ -85,10 +85,14 @@ The command `bin/seed profiles` has the following:
 - `bin/seed profiles copy --source [profile-name-1] --target [profile-name-2]` will duplicate/copy a profile
 - `bin/seed profiles list` will list profiles
 
+## Updating seed
+Updating seed can be done by the command `bin/seed update`
+
 ## Command glossary
 
 | Command                                                                      | Summary                                                                                                                                               |
 |------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `bin/seed update`                                                            | Update seed based on the current branch                                                                                                               |
 | `bin/seed profiles action [create,copy,delete,list]`                         | Runs profiles actions as create, delete, copy and list                                                                                                |
 | `bin/seed seed path/to/file.sql --profile {www.example.com} [--delete-file]` | Runs seed, to clean up your local database<br/>file is required<br/>profile is required<br/>delete-file will delete the original SQL file if provided |
 | `bin/seed test`                                                              | Runs tests                                                                                                                                            |

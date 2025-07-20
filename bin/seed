@@ -7,6 +7,7 @@ path="$(realpath "$(dirname "$(dirname "${BASH_SOURCE[0]}")")")"
 source "$path"/.env
 source "$path"/bin/helpers
 source "$path"/bin/profiles
+source "$path"/bin/update
 
 "$path"/bin/copy-dump-file "$1"
 
